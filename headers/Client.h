@@ -16,7 +16,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef ClIENT_H
+#ifndef CLIENT_H
 #define CLIENT_H
 
 #include <string> // the standard string library
@@ -49,6 +49,12 @@ class Client {
 
         // get's cash reserve 
         float get_cash_resrv( );
+
+        // public settor's
+
+        void set_pin(std::string _pin);
+
+        void set_accnt_number(std::string _accnum);
 
 
     protected :
@@ -97,6 +103,13 @@ class Client {
 
         // deduct's the cash reserve when amount is withdrawn.
         float operator-( float _amnt );
+
+
+        // Find a way to implement to_string in Display : NOTE 1.a
+        friend std::ostream& operator<<( std::ostream & out, Client & cli ); 
+
+
+        
       
     // 
 
