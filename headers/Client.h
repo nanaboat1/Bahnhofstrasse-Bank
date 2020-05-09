@@ -73,7 +73,7 @@ class Client {
     public :
 
         // updates's cash reserve()
-        void update_cash_reserve( );
+        void update_cash_reserve( float update_cash );
 
         // Constructors for the Class
 
@@ -81,26 +81,24 @@ class Client {
         Client( ); 
 
         // parameterized constructor
-        Client( Biodata bio, std::string _accntNum, std::string _pin );
+        Client( Biodata _bio, std::string _accntNum, std::string _pin );
 
         // Destructor
         ~Client( );
 
         // send's data to file. 
-        void to_file( );
+        std::string to_file( );
 
-        // read data from file.
-        void from_file( );
 
         // operator overloads for the class
 
         // increment's the cash reserve , when amount is deposited.
-        int operator+( int _amnt );
+        float operator+( float _amnt );
 
         // deduct's the cash reserve when amount is withdrawn.
-        int operator-( int _amnt );
+        float operator-( float _amnt );
+      
     // 
-
 
 };
 #endif
