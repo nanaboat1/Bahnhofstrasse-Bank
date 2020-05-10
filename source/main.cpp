@@ -10,7 +10,15 @@
 
 void tester( ) {
 
-    create_account();
+   // create_account();
+
+   std::string hello;
+
+    input_gettor( hello );
+
+   std::cout << hello << std::endl;
+
+
 
 }
 

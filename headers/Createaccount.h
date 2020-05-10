@@ -22,6 +22,14 @@
 #include "../headers/Biodata.h" // the header file for Biodata Class
 #include "../headers/Crtaccdisplay.h" // the header file for Welcome display.
 
+//////////////
+// function prototypes
+
+
+
+
+/////////////
+
 
 
 // Appropriate Display :: From the Display Folder.
@@ -51,6 +59,63 @@ void create_account( ) {
     return;
 }
 
+
+// This function get's User's name.
+std::string user_name_input() {
+
+    std::vector <std::string> user_name; // get's user's name. 
+    std::string get_data; // get's user's input.
+    bool done_input = false; // exits loop for obtaining user's name.
+
+    // Case: Get's User's name including whitespaces.
+
+    // Case: Get User name.
+    while( !done_input ) {
+
+
+
+
+    }
+
+
+
+
+
+    return "alpha";
+}
+
+// This function ,get's users input
+// and return's appropriate data type
+
+template <typename Type> 
+Type input_gettor( Type & a ) {
+
+    // Case: Pointer to hold user input of type 
+    Type *input_a_ptr = nullptr;
+    Type *input_b_ptr = nullptr;
+
+    // Case: Dynamically allocating memoery space for the pointer's
+    input_a_ptr = new Type();
+    input_b_ptr = new Type();
+
+
+    do{ 
+
+        std::cout << " NOTE: Program will prompt you until both input's are correct." << std::endl;
+
+        std::cout << " Enter Your input --> ";
+        getline(std::cin, *input_a_ptr);
+        std::cin.ignore();
+
+        std::cout << " Enter Your input --> ";
+        getline(std::cin, *input_a_ptr);
+
+    }while( input_a_ptr != input_b_ptr );
+
+
+    a = *input_a_ptr;
+
+}
 
 
 
