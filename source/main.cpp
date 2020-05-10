@@ -10,13 +10,16 @@
 
 void tester( ) {
 
-   // create_account();
+    // create_account();
 
-   std::string hello;
+   //  std::string hello;
 
-    input_gettor( hello );
+   // generate_accNum( hello, 1);
 
-   std::cout << hello << std::endl;
+   // std::cout << hello << std::endl;
+
+    create_account();
+
 
 
 

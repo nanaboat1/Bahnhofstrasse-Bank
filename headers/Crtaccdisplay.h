@@ -20,6 +20,7 @@
 #include <string> // the standard string library
 #include "../headers/Client.h" // the header file for Client 
 #include "../headers/Biodata.h" // the header file for Biodata
+#include <cstdlib> // for comparing chars
 
 ////////////////////////////
 // function prototypes   //
@@ -32,37 +33,72 @@ void clear_disp( );
 //                   //
 //////////////////////
 
+// This function does error checker of strings after input is gotten.
+char rmv_char(char ch ) {
+	ch = '\0'; 	return ch ;
+}
+// This function removes punctuations from the word.
+void rmv_puncs( std::string & line ) { 
+	for ( int i=0; i < line.length(); i++ ) {
+
+	
+		if( !std::isalnum(line[i])  ) { 
+			line[i] = rmv_char(line[i]) ;
+		} 
+	
+	}
+}
+//
+
+
 
 // This Function takes in User input on the type of account to create
+std::string user_input( ) {
 
-int user_input( ) {
-
-    int  choice = 0;
+    char  choice[4];
     bool leave_input = false;
 
     std::cout << " NOTE: Program will loop until correct input is gotten" << std::endl << std::endl;
     while( !leave_input ) {
 
         std::cout << "Enter the correct choice --> ";
-        std::cin >> choice;
-
-        if ( choice > 2 || choice < 1) {
-
+        std::cin.get(choice, 4);
+        std::cin.ignore(); // Major Problem here:: Fix it 
+        
+        if ( choice[0] != '2' || choice[0] != '1') {
             leave_input = false;
         } else {
             leave_input = true;
         }
-
     }
-    
     return choice;
 }
 
+// function generates prompt to tell user about entering a data field.
+void user_name_display( int type_of_data ) {
+
+    std::string horizontal_line =" __________________________________________________" ;// horizontal borders for display
+    std::string line_of_pixels = "|                                                  |";// vertical borders for display
+    std::string user_type[3]= {"Name   ", "Address", "PIN    "};
+    std::string prompt_line = "| Enter your legal " +  user_type[type_of_data] +  "                         |";// Prompts line with specific data.
+
+    std::cout << horizontal_line << std::endl;
+    for( int i=0; i < 3; i++ ) {
+
+        if ( i == 2 ) {
+            std::cout << "| Proceed to Enter in the data fields              |" << std::endl << std::endl;
+            std::cout << prompt_line  <<std::endl;
+        } else {
+            std::cout << line_of_pixels << std::endl;
+        }
+    }
+    std::cout << horizontal_line << std::endl; 
+}
 
 // Case:  This function Welcomes the user, when the user is about to create an
 // account. 
 // Testing quality : High
-int welcome_display( ) {
+std::string welcome_display( ) {
 
     std::string horizontal_line =" __________________________________________________" ;// horizontal borders for display
     std::string line_of_pixels = "|                                                  |";// vertical borders for display
@@ -91,7 +127,7 @@ int welcome_display( ) {
     std::cout << std::endl;
 
     // Get's User Input
-    int choice =0;
+    std::string choice;
     choice = user_input();
 
     clear_disp();
