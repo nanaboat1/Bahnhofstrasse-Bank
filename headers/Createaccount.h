@@ -45,12 +45,14 @@ void create_account( ) {
     ////////
     // Case: Data, used for creating an Account. 
     std::string user_name; // calls user name input function.
+    input_gettor( user_name);
 
-    std::string user_address; // calls user address input function.
+    std::string user_address; // generates address
 
-    std::string user_accountNumber; // generates user account number through a fxn
+    std::string user_accountNumber; //  generates account num.
 
     std::string user_pin; // get's user's chosen pin through a fxn. 
+    input_gettor( user_pin );
     ///////
 
 
@@ -60,29 +62,6 @@ void create_account( ) {
 }
 
 
-// This function get's User's name.
-std::string user_name_input() {
-
-    std::vector <std::string> user_name; // get's user's name. 
-    std::string get_data; // get's user's input.
-    bool done_input = false; // exits loop for obtaining user's name.
-
-    // Case: Get's User's name including whitespaces.
-
-    // Case: Get User name.
-    while( !done_input ) {
-
-
-
-
-    }
-
-
-
-
-
-    return "alpha";
-}
 
 // This function ,get's users input
 // and return's appropriate data type
