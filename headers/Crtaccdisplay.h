@@ -55,27 +55,29 @@ void rmv_puncs( std::string & line ) {
 // This Function takes in User input on the type of account to create
 std::string user_input( ) {
 
-    char  choice[4];
+    char  choice[2];
+    choice[1]= '\0';
     bool leave_input = false;
 
     std::cout << " NOTE: Program will loop until correct input is gotten" << std::endl << std::endl;
     while( !leave_input ) {
 
         std::cout << "Enter the correct choice --> ";
-        std::cin.get(choice, 4);
-        std::cin.ignore(); // Major Problem here:: Fix it 
+        std::cin >> choice[0];
+        std::cin.clear();
         
-        if ( choice[0] != '2' || choice[0] != '1') {
-            leave_input = false;
-        } else {
+        if ( choice[0] == '2' || choice[0] == '1') {
             leave_input = true;
+        } else {
+            leave_input = false;
         }
     }
+    std::cin.ignore(1000, '\n'); // Major Problem here:: Fix it 
     return choice;
 }
 
-// function generates prompt to tell user about entering a data field.
-void user_name_display( int type_of_data ) {
+// Case: function generates prompt to tell user about entering a data field.
+void data_field_display( int type_of_data ) {
 
     std::string horizontal_line =" __________________________________________________" ;// horizontal borders for display
     std::string line_of_pixels = "|                                                  |";// vertical borders for display
@@ -135,7 +137,7 @@ std::string welcome_display( ) {
     return choice;
 }
 
-// This function clears the display.
+// Case: clears the display.
 void clear_disp( ) {
 
     #ifdef _WIN32

@@ -36,21 +36,25 @@ void str_get( std::string & b, int num_chars );
 
 
 // This template function, takes in User Data of any type. 
+// and help in entering data field. 
 template <typename Type> 
 void input_gettor( Type & a ) {
 
-    // Case: Pointer to hold user input of type 
+    // Case: variable to hold user input of type 
     Type input_a_ptr;
     Type input_b_ptr;
+    bool rentering = false; // tracks user's input
 
-
+    // Case: inform the user of what's going on.
+    std::cout << std::endl;
     std::cout << " NOTE: Program will prompt you until both input's are correct." << std::endl;
+    std::cout << std::endl;
     do{ 
 
     
         std::cout << " Enter Your input --> ";
         getline(std::cin, input_a_ptr);
-        std::cin.ignore();
+        // std::cin.ignore();
         
         std::cout << std::endl;
         std::cout << " Enter Your input again --> ";
@@ -61,7 +65,7 @@ void input_gettor( Type & a ) {
     a = input_a_ptr;
 }
 
-// Case: function creates account number string for user.
+// Case: function generates account number string for user.
 // Testing quality: High
 void generate_accNum( std::string & a, int accntType ) {
 
@@ -110,25 +114,21 @@ void str_get( std::string & b, int num_chars ) {
 
 
 
-
-
-
-
 void create_account( ) {
 
 
     // Case: Display The Welcome Screen for Creating an Account. 
     int type_of_account = std::stoi(welcome_display()); // get's user's choice on type of account to create.
     ////////
-
+    std::cin.clear();
     // Case: Get Data, used for creating an Account. 
 
     std::string user_name; // calls user name input function.
-    user_name_display(1);// get user name display
+    data_field_display(0);// get user name display
     input_gettor( user_name );
 
     std::string user_address; 
-    user_name_display(2);// get adrress display
+    data_field_display(1);// get adrress display
     input_gettor( user_address ); // generates address 
 
     std::string user_accountNumber; //  generates account num. 
@@ -136,9 +136,31 @@ void create_account( ) {
 
     // get pin display
     std::string user_pin; // get's user's chosen pin through a fxn. 
-    user_name_display(3);// get's pin display
+    data_field_display(2);// get's pin display
     input_gettor( user_pin );
+
+    // clear disp here
+    clear_disp();
     ///////
+
+    // Case : Instantiate the Client Class here. 
+    // Sub-case : Utilize dynamic Memory.
+
+    // Dynimically creating Biodata class.
+    Biodata *bio_account = nullptr;
+    bio_account = new Biodata(user_name, user_address );
+
+    // Sub-case: 
+    Client *account_created = nullptr;
+
+    // Case: Dynamically Create memory to hold Type Client
+    account_created = new Client(*bio_account, user_accountNumber, user_pin );
+
+    // Send to file. Nicely using the to_file method of the class. 
+
+
+
+    
 
 
 
