@@ -20,7 +20,7 @@
 #include <vector> // the standard vector class
 #include "../headers/Client.h" // the header file for Client class
 #include "../headers/Biodata.h" // the header file for Biodata Class
-#include "../headers/Crtaccdisplay.h" // the header file for Welcome display.
+#include "../headers/Accdisplay.h" // the header file for Welcome display.
 #include <cstdlib> // used for rand.
 #include <ctime> // the standard time library
 #include <cmath> // the standard math library
@@ -109,7 +109,8 @@ void str_get( std::string & b, int num_chars ) {
     return;
 }
 
-// Function aids writing of data of type Client to file
+// Function aids writing of data of type Client to Vault.dat
+// Testing Quality: 
 void accnt_to_file( Client & customer ) {
 
     // Case: Instantiate File object object here.
@@ -120,10 +121,8 @@ void accnt_to_file( Client & customer ) {
 
     // NOTE : This only happens in a worst case scenario.
     if(secured_write.fail() ) {
-
         std::cout << " Can't Open file" << std::endl;
         return;
-
     }
 
     std::string to_file = customer.to_file();
@@ -132,10 +131,8 @@ void accnt_to_file( Client & customer ) {
     secured_write << to_file << std::endl;
 
 
+    // close file.
     secured_write.close();
-
-
-
 
     return;
 }
@@ -184,6 +181,8 @@ void create_account( ) {
     // Displays information to the User. Before it moves on to instantiate the Client object.
     show_infoDisplay( user_info );
 
+    //sec Feature :  Press Enter to Clear
+
     // Case : Instantiate the Client Class here. 
     // Sub-case : Utilize dynamic Memory.
 
@@ -208,10 +207,10 @@ void create_account( ) {
     // as the database of the Bank.
     accnt_to_file( *account_created );
 
-
-
-
-
+    //deallocate memory.
+    delete account_created; // dele pointer
+    account_created = nullptr;
+    user_info.empty(); // empty vector
 
 
     return;
