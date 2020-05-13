@@ -21,6 +21,7 @@
 #include "../headers/Client.h" // the header file for Client 
 #include "../headers/Biodata.h" // the header file for Biodata
 #include <cstdlib> // for comparing chars
+#include <vector> // the standard vector class
 
 ////////////////////////////
 // function prototypes   //
@@ -32,30 +33,10 @@ void clear_disp( );
 ////////////////////////
 //                   //
 //////////////////////
-
-// This function does error checker of strings after input is gotten.
-char rmv_char(char ch ) {
-	ch = '\0'; 	return ch ;
-}
-// This function removes punctuations from the word.
-void rmv_puncs( std::string & line ) { 
-	for ( int i=0; i < line.length(); i++ ) {
-
-	
-		if( !std::isalnum(line[i])  ) { 
-			line[i] = rmv_char(line[i]) ;
-		} 
-	
-	}
-}
-//
-
-
-
 // This Function takes in User input on the type of account to create
-std::string user_input( ) {
+std::string user_input() {
 
-    char  choice[2];
+    char  choice[20];
     choice[1]= '\0';
     bool leave_input = false;
 
@@ -76,12 +57,12 @@ std::string user_input( ) {
     return choice;
 }
 
-// Case: function generates prompt to tell user about entering a data field.
+// Case: function generates prompt to tell user about entering a specific data field.
 void data_field_display( int type_of_data ) {
 
     std::string horizontal_line =" __________________________________________________" ;// horizontal borders for display
     std::string line_of_pixels = "|                                                  |";// vertical borders for display
-    std::string user_type[3]= {"Name   ", "Address", "PIN    "};
+    std::string user_type[3]= {"Name   ", "Address", "PIN    "};// alternate type of data asked.
     std::string prompt_line = "| Enter your legal " +  user_type[type_of_data] +  "                         |";// Prompts line with specific data.
 
     std::cout << horizontal_line << std::endl;
@@ -136,6 +117,40 @@ std::string welcome_display( ) {
 
     return choice;
 }
+// Function displays user inputted info to console.
+void show_infoDisplay( std::vector <std::string> info_vec ) {
+
+    std::string horizontal_line =" __________________________________________________" ;// horizontal borders for display
+    std::string line_of_pixels = "|                                                  |";// vertical borders for display
+
+
+    std::cout<< horizontal_line << std::endl;
+    for( int i=0; i <4; i++) {
+
+        std::cout << line_of_pixels << std::endl;
+        if ( i == 2) {
+            std::cout<< horizontal_line << std::endl;
+            std::cout << " Below is the information you Provided  \n" << std::endl;
+            std::cout << " Name :==> " << info_vec[0] << std::endl;
+            std::cout << " Address :==> " << info_vec[1] << std::endl << std::endl;
+            std::cout<< horizontal_line << "\n"<< std::endl;
+
+            std::cout << " NOTE: Please keep this information secured:: It's needed for Login \n " << std::endl;
+            std::cout << " Account number :==> " << info_vec[2] << std::endl;
+            std::cout << " PIN :==>  " << info_vec[3] << std::endl << std::endl;
+            
+        }
+        std::cout << horizontal_line << std::endl;
+
+
+        
+    }
+
+
+
+
+}
+
 
 // Case: clears the display.
 void clear_disp( ) {

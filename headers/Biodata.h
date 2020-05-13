@@ -35,13 +35,13 @@ class  Biodata {
 
         // member variable access is made public, 
         // because it will be accessed in protected mode by the Client class.
-
-
         // stores name of client.
         std::string name_client; 
 
         // stores address of client.
         std::string addrss_client;
+
+        ~Biodata( );
     // 
 
 };

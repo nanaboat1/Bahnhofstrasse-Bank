@@ -28,3 +28,6 @@ Biodata::Biodata( ) : Biodata("undefined", "undefined") {}
 
 // Parameterized constructor 
 Biodata::Biodata( std::string _name, std::string _addrs ) : name_client(_name), addrss_client(_addrs) {}
+
+// Destructor of class
+Biodata::~Biodata( ) { }

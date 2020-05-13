@@ -18,7 +18,11 @@ void tester( ) {
 
    // std::cout << hello << std::endl;
 
-    create_account();
+    // create_account();
+
+    Client new_cli;
+
+    accnt_to_file( new_cli );
 
 
 

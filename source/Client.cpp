@@ -78,11 +78,12 @@
 
     // send's data to file. 
     std::string Client::to_file( ) {
+        
         std::string str; 
 
         // Case: Append data to string in a standardized way
         // to be stores on file. 
-        char stnd_sprtr = ','; // used to detect and manipulate strings
+        char stnd_sprtr = ','; // used to detect and manipulate data.
 
         str += this->get_bio_name() + stnd_sprtr + // name is added to string & stndrd separated.
         this->get_bio_addrs() + stnd_sprtr + // addrs is added to string & stndrd separated

@@ -24,6 +24,7 @@
 #include <cstdlib> // used for rand.
 #include <ctime> // the standard time library
 #include <cmath> // the standard math library
+#include <fstream> // the standard file library.
 
 ////////////////////////////
 // function prototypes   //
@@ -34,9 +35,11 @@ void str_get( std::string & b, int num_chars );
 //                   //
 //////////////////////
 
-
-// This template function, takes in User Data of any type. 
-// and help in entering data field. 
+//////////////////////////////////////////////////////////////////
+// This template function, takes in User Data of any type.     //
+// and help in entering data field.                           //
+// Testing quality: High                                     //
+//////////////////////////////////////////////////////////////
 template <typename Type> 
 void input_gettor( Type & a ) {
 
@@ -74,7 +77,7 @@ void generate_accNum( std::string & a, int accntType ) {
 
     // append acc_label index depending on value
     // of accType
-    a += acc_label[accntType]; 
+    a = acc_label[accntType -1]; 
 
     // Case: Call function to append generated type string 
     str_get( a, 5 );
@@ -87,24 +90,49 @@ void str_get( std::string & b, int num_chars ) {
 
     // Case: Custom Template, to generate string from
     const std::string frame_string_a = "adjofnhwfqhrwqpdfdortpartuwvczxrrwgvdy";
-    const std::string frame_string_b = "01234567890123534539012345547456123456";
+    const std::string frame_string_b = "0123456789";
     srand(time(NULL)); // seed rand with current time.
     int index =0;
+    
 
     // Case: loop attaches num of chars to string.
-    for ( int i=0; i< num_chars; i++){
+    for ( int i=0; i < num_chars; i++){
 
-        // Case: when i is even.
-        if( (i%2) == 0 ) {
+        index = rand() % 10;
+        b+= frame_string_b[index];
+    
+    }
 
-            index = rand( ) % 34;
-            b += frame_string_a[index];
-        } else {
-            index = rand() % 25;
-            b += frame_string_b[index];
-        }
+
+
+
+    return;
+}
+
+// Function aids writing of data of type Client to file
+void accnt_to_file( Client & customer ) {
+
+    // Case: Instantiate File object object here.
+    std::fstream secured_write; 
+
+    // Case: Open data File, to write to file.
+    secured_write.open("Vault.dat", std::ios::out | std::ios::app);
+
+    // NOTE : This only happens in a worst case scenario.
+    if(secured_write.fail() ) {
+
+        std::cout << " Can't Open file" << std::endl;
+        return;
 
     }
+
+    std::string to_file = customer.to_file();
+
+    // Case: Write Data of type client to file.
+    secured_write << to_file << std::endl;
+
+
+    secured_write.close();
 
 
 
@@ -116,32 +144,45 @@ void str_get( std::string & b, int num_chars ) {
 
 void create_account( ) {
 
+    
 
     // Case: Display The Welcome Screen for Creating an Account. 
     int type_of_account = std::stoi(welcome_display()); // get's user's choice on type of account to create.
     ////////
-    std::cin.clear();
+    std::cin.clear(); // clear stream errors
+
+
     // Case: Get Data, used for creating an Account. 
+
+    // Sub-Case: Organizes user data.
+    std::vector <std::string> user_info;
 
     std::string user_name; // calls user name input function.
     data_field_display(0);// get user name display
     input_gettor( user_name );
+    user_info.push_back( user_name );
 
     std::string user_address; 
     data_field_display(1);// get adrress display
     input_gettor( user_address ); // generates address 
+    user_info.push_back( user_address);
 
     std::string user_accountNumber; //  generates account num. 
-    generate_accNum( user_accountNumber, 5 ); // generates address.
+    generate_accNum( user_accountNumber, type_of_account ); // generates address.
+    user_info.push_back( user_accountNumber);
 
     // get pin display
     std::string user_pin; // get's user's chosen pin through a fxn. 
     data_field_display(2);// get's pin display
     input_gettor( user_pin );
+    user_info.push_back( user_pin );
 
-    // clear disp here
+    // clear display here
     clear_disp();
     ///////
+
+    // Displays information to the User. Before it moves on to instantiate the Client object.
+    show_infoDisplay( user_info );
 
     // Case : Instantiate the Client Class here. 
     // Sub-case : Utilize dynamic Memory.
@@ -156,11 +197,19 @@ void create_account( ) {
     // Case: Dynamically Create memory to hold Type Client
     account_created = new Client(*bio_account, user_accountNumber, user_pin );
 
-    // Send to file. Nicely using the to_file method of the class. 
+    // Case: dynamically deallocate bio_account
+    delete bio_account;
+
+    // Case: Send to file. Nicely using the to_file method of the class. 
+
+
+    // Create a function, that sends the data to file.
+    // The Specific file, is called Vault.dat and it acts 
+    // as the database of the Bank.
+    accnt_to_file( *account_created );
 
 
 
-    
 
 
 
