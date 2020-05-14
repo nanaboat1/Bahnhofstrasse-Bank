@@ -100,7 +100,6 @@ std::string welcome_display( ) {
             std::cout << "| Select the Type of Account you want to Create    |" << std::endl;
             std::cout << "| Select 1 for savings. Select 2 for Current       |" << std::endl;
         }
-
     }
     std::cout << info_welcome << std::endl;
     for( int i=0; i < 2; i++) {

@@ -25,6 +25,7 @@
 #include <ctime> // the standard time library
 #include <cmath> // the standard math library
 #include <fstream> // the standard file library.
+#include <typeinfo> // type info library
 
 ////////////////////////////
 // function prototypes   //
@@ -54,7 +55,6 @@ void input_gettor( Type & a ) {
     std::cout << std::endl;
     do{ 
 
-    
         std::cout << " Enter Your input --> ";
         getline(std::cin, input_a_ptr);
         // std::cin.ignore();
@@ -65,6 +65,7 @@ void input_gettor( Type & a ) {
 
     }while( input_a_ptr != input_b_ptr );
 
+    // a get's correct verified input.
     a = input_a_ptr;
 }
 
@@ -103,9 +104,6 @@ void str_get( std::string & b, int num_chars ) {
     
     }
 
-
-
-
     return;
 }
 
@@ -129,7 +127,6 @@ void accnt_to_file( Client & customer ) {
 
     // Case: Write Data of type client to file.
     secured_write << to_file << std::endl;
-
 
     // close file.
     secured_write.close();
@@ -211,6 +208,14 @@ void create_account( ) {
     delete account_created; // dele pointer
     account_created = nullptr;
     user_info.empty(); // empty vector
+
+    char delay ; // delays the program
+    std::cout << " ACCOUNT SUCCESSFULLY CREATED " << std::endl;
+    std::cout << " MOVE ON TO LOG IN " << std::endl;
+
+
+    std::cout << "Enter any key to exit Create Account " << std::endl;
+    std::cin >> delay;
 
 
     return;

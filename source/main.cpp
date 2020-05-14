@@ -1,32 +1,51 @@
 
-
-
-
 #include "../headers/Accdisplay.h"
 #include "../headers/Createacct.h"
 #include "../headers/Logindisplay.h"
 #include "../headers/Login.h"
+#include "../headers/Transactdisplay.h"
+
+#include "../headers/Transaction.h"
+#include "../headers/Home.h"
 
 #include <iostream>
 
 
-
-
 void tester( ) {
 
-    // create_account();
+   // std::vector <std::string> vec;
 
-   //  std::string hello;
+   // std::string test = "Nana Boateng Amoah,wer34,Cu09309,4704,0.0000";
 
-   // generate_accNum( hello, 1);
+    // line_to_seprt( test, vec );
 
-   // std::cout << hello << std::endl;
 
-    // create_account();
-    std::vector <std::string> vec;
+   // std::cout << vec[4] << std::endl;
+    
 
-   login_form( vec );
+   // if ( vec[2] == "Cu09309") {
+       //std::cout << "Good to go" << std::endl;
+   //}
 
+    // login_bank();
+
+   // std::stack <Client> cli;
+
+   // Client clo;
+
+   // cli.push(clo);
+    // cash_withraw( cli );
+
+    // print_receipt( clo , 1, 0.0);
+
+
+   // mother_func( cli );
+    
+}
+
+void main_test() {
+
+    Home();
 
 
 }
@@ -34,7 +53,9 @@ void tester( ) {
 
 int main() {
 
-    tester();
+    // tester();
+
+    main_test();
 
     return 0;
 }

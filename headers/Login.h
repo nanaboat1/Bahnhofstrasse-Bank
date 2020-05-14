@@ -15,46 +15,204 @@
 // Purpose: Final Project- Makes the client to login, header file.
 //
 ////////////////////////////////////////////////////////////////////////////////////////
+#pragma once
 #include <string> // the standard string library 
 #include "../headers/Biodata.h" // the header file Biodata class
 #include "../headers/Client.h" // the header file for Client class
 #include <vector> // the standard vector library
 #include <stack> // the standard stack library.
 #include <fstream> // for handling files.
-
+#include <typeinfo> // for type info
+#include "../headers/Transaction.h"
 // More include libraries 
 #include "../headers/Logindisplay.h" // for display handling.
 
+// function prototypes
+bool line_to_seprt(std::string _line, std::vector <std::string> & data_vec );
+bool search_vault( std::vector <std::string> & search_client_data , std::stack <Client> & user );
+void read_file( std::vector <std::string> & usr_details, std::stack <Client> & user );
+
+/////////////////////
+
+
+void read_file( std::vector <std::string> & usr_details, std::stack <Client> & user ) {
+
+
+    // Case: Instantiate ifstream class
+    std::ifstream fin;
+
+    fin.open("Vault.dat"); // open file
+
+    // Case: Error checking of file.
+    if ( fin.fail()) {
+        std::cout << "File not found" << std::endl;
+    }
+
+    // Case:  Loop Reads the file breaks file line into portions
+    // 
+    std::string chk_data; // to check if there's more line to read
+    std::string file_line; // get line of data.
+    std::vector <std::string> client_info;
+    bool reading = true;
+    bool _data_exst = false; // to prevent memory access error
+    
+    while(reading ) {
+
+        // Case: get that specific line of data
+        getline(fin, file_line);
+
+        // Case: Send string to a function that breaks it up 
+        // to get useful data.
+        _data_exst = line_to_seprt( file_line, client_info);
+
+        // Case: Check if the login details are correct
+        if ( _data_exst ) {
+
+            if ( (client_info[2] == usr_details[0]) && (client_info[3] == usr_details[1])) {
+
+
+                // Case : When login details are equal 
+                // dynamically create a Client class with it.
+                Biodata *bio_ptr = nullptr;
+                Client *client_ptr = nullptr;
+
+                // Case: Create a Biodata class
+                bio_ptr = new Biodata(client_info[0], client_info[1]);
+
+                // Case: Create a temporary Client class.
+                client_ptr = new Client( *bio_ptr, client_info[2], client_info[3]);
+
+                // Set's Bank access to true based on the PIN.
+                user.top().set_access(std::stoi(client_info[3]));
+
+                user.top().update_cash_reserve((std::stof(client_info[4]) *100)/100);
+
+                // Case: Push Client object to stack
+                user.push(*client_ptr);
+
+                // for memory safety
+                delete bio_ptr;
+                bio_ptr =nullptr;
+
+                delete client_ptr;
+                client_ptr = nullptr;
+
+                reading = false;// signalling data has been gotten
+                return; // so that it doesnt read the files again.
+
+            } else {
+                reading = true;
+            }
+        }
+
+    }
+   
+    return;
+}
+
+// Situation : this function separates line contents of file of type string 
+// It utilises ASCII to detect a separator.
+bool line_to_seprt(std::string _line, std::vector <std::string> & data_vec ) {
+
+  // use the comma as a clue here to break the code 
+  int num_comma = 0;
+  std::string data_collector; // get's data from _line
+  int track_cur_comma =0; // the position of current comma.
+
+
+  // Case: This loop checks line of type string and get's 
+  // specific data from it and stores them in temp_baby_name & tem_baby_gender &
+  // temp_baby_count respectively.
+  for ( int i=0; i < _line.length()-1; i++ ) { 
+
+    // Case: iterate meets 1st comma
+    if (_line[i] == ',' && num_comma == 0) { 
+
+      // Case : get name from string _line 
+      for (int n=0; n < i; n++) {
+        data_collector += _line[n];
+      }
+      data_vec.push_back(data_collector); 
+      num_comma =1;  
+      data_collector = ""; 
+      track_cur_comma = i;
+    }
+
+    // Case: iterate meets 2nd comma
+    if ((_line[i]== ',' && num_comma == 1) && (i != track_cur_comma)) {
+
+      // Case : get address from _line
+      for( int j= track_cur_comma + 1; j < i; j++){ 
+        data_collector += _line[j];
+      }
+      data_vec.push_back(data_collector);
+      num_comma = 2;
+      data_collector = "";
+      track_cur_comma = i; 
+    } 
+
+    // Case: iterate meets 3rd comma.
+    if((_line[i] == ',' && num_comma == 2) && (i != track_cur_comma) ) {
+
+      // get Acct number from  _line
+      for (int c = track_cur_comma + 1; c < i; c++){
+        data_collector += _line[c]; // get's count
+      }
+      data_vec.push_back( data_collector);
+      num_comma =3; 
+      data_collector = "";
+      track_cur_comma = i;
+    }
+
+    // Case: iterate meets 4th comma.
+    if(( _line[i] == ',' && num_comma == 3) && (i != track_cur_comma) ) {
+
+        for( int e= track_cur_comma + 1; e < i; e++){
+            //get pin from _line 
+            data_collector += _line[e];
+        }
+        data_vec.push_back(data_collector);
+        data_collector = "";
+
+        // Case: iterate gets any data after 4th comma.
+        for ( int o=i + 1; o < _line.length(); o++) {
+            // get cash reserve from _line
+           data_collector += _line[o];
+        }
+        data_vec.push_back(data_collector);
+
+    }
+
+  }
+
+  // Case : Incase no data is pushed to vector
+  if ( data_collector.size() == 0) {
+      return false; // signalling no data exists
+  }
 
 
 
-
-
+    return true;
+}
 
 // Case : Sub-function that searches through file to get User Data.
 // function returns bool to indicate that data is existent in file. of login details.
-int from_vault( std::vector <std::string> & client_data ) {
+bool search_vault( std::vector <std::string> & search_client_data , std::stack <Client> & user ) {
 
-    // Case : Instantiate Fsstream Class.
-    std::ifstream fin; 
 
-    fin.open("Vault.dat");
+    read_file( search_client_data, user) ;
 
-    // Error checking
-    // happens absolutely to none.
-    if(fin.fail() ) {
-        std::cout << "File can't open " << std::endl;
-        return -1;
+
+    if ( user.top().get_pin() == search_client_data[1]) {
+        std::cout << "Good to Go" << std::endl;
+        return true;
     }
 
-    
 
 
 
 
-
-
-    return 0;
+    return false;
 }
 
 
@@ -64,22 +222,33 @@ int from_vault( std::vector <std::string> & client_data ) {
 void login_bank( ) {
 
 
-    // Create Efficient Displays
+    // Case: Welcome display 
     login_welcome_display();
 
     // Instantiate a vector
     std::vector <std::string> from_file;  // Vector get's Customer data from file.
     std::vector <std::string> user_login_info; // stores user's input 
-
+    std::stack <Client> user; // get's Client object.
 
 
     // Nice Login Page. to Get user's data
-    login_form(user_login_info);
+    login_form(user_login_info); // arb_vector[0] == Accnt_num. arb_vector[1] == PIN.
 
-
+    // Case : Search the Vault for User details and if gotten, load into
+    // stack.
+    search_vault( user_login_info, user);
 
     // Case: Function makes user to Enter data and search through vault.
     // Utilizing a Vector to do that.
+
+
+    // Now: Let's Play with User
+
+    // Performs Transactions on User.
+    mother_func( user); 
+
+
+
 
 
 

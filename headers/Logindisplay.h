@@ -83,42 +83,13 @@ void login_form( std::vector <std::string> & usr_details ) {
     std::cout << "Enter your Account number |\n" << std::endl;
     std::cout << "--------------------------" << std::endl;
     input_gettor( take_input);
-    usr_details.push_back( take_input);
+    usr_details.push_back( take_input); // usr_details[0] == Account number
 
     std::cout << "--------------------------" << std::endl;
     std::cout << "Enter your PIN number     |\n" << std::endl;
     std::cout << "--------------------------" << std::endl;
     input_gettor( take_input );
-    usr_details.push_back( take_input );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-                
-
-    
-
-
+    usr_details.push_back( take_input ); // usr_details[1] == login PIN
 
     return;
 }
