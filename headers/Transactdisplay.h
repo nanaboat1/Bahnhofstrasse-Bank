@@ -26,7 +26,7 @@
 
 //////
 // function prototype
-std::string disp_time( );
+std::string disp_time( ); // used to display time
 std::string transact_home( );
 
 
@@ -191,7 +191,7 @@ void input_gettor_fl( float & a ) {
 }
 
 // This function prints receipt after each Transaction.
-void print_receipt( Client & _clien, int type_trsct, float amnt_transacted ) {
+void print_receipt( Client & _clien, int type_trsct, float amnt_transacted, std::string trnsfr = "NONE" ) {
 
 
     // for alternating the type of receipt being used.
@@ -222,13 +222,12 @@ void print_receipt( Client & _clien, int type_trsct, float amnt_transacted ) {
             std::cout << " Time Transacted :" << d_ate << std::endl << std::endl;
 
         }
-        std::cout << receipt_border_hori << std::endl;
-
-
-
-
+        
     }
-
+    if( type_trsct == 1){ 
+        std::cout << " Transfer made to: " << trnsfr << std::endl;
+    }
+    std::cout << receipt_border_hori << std::endl;
 
 }
 

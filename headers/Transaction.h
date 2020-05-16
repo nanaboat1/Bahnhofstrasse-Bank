@@ -74,6 +74,9 @@ void cash_withraw( std::stack <Client> & clier  ) {
 
     float amnt_withdraw = 0.0;
 
+    std::cout << "_____________________________________________" << std::endl;
+    std::cout << " ENTER THE AMOUNT YOU WANT TO WITHDRAW TODAY " << std::endl << std::endl;
+    std::cout << "_____________________________________________" << std::endl;
     // Takes in user input.
     input_gettor_fl( amnt_withdraw );
 
@@ -96,7 +99,9 @@ void cash_deposit( std::stack <Client> & clir ) {
     clear_disp();
 
     float amnt_deposit = 0.0;
-
+    std::cout << "_____________________________________________" << std::endl;
+    std::cout << " ENTER THE AMOUNT YOU WANT TO DEPOSIT TODAY " << std::endl << std::endl;
+    std::cout << "_____________________________________________" << std::endl;
     // Takes in user input.
     input_gettor_fl( amnt_deposit );
 
@@ -116,30 +121,46 @@ void cash_deposit( std::stack <Client> & clir ) {
 // Performs cash transfer proesses.
 void cash_transfer( std::stack <Client> & clir) {
 
+
+    std::string transferee; 
+
     // Cash Deposit Display
     // Call the cash withdraw display function.
-    withdraw_cash_disp(); 
+
+
+    transfer_cash_disp(); 
 
     clear_disp();
-
     float amnt_deposit = 0.0;
 
+    
+    std::cout << " Enter the Account Number you are transferring to --> ";
+    getline( std::cin, transferee);
+    
+    // clears display.
+    clear_disp();
+
+    std::cout << "_____________________________________________" << std::endl;
+    std::cout << " ENTER THE AMOUNT YOU WANT TO TRANSFER TODAY " << std::endl << std::endl;
+    std::cout << "_____________________________________________" << std::endl;
     // Takes in user input.
     input_gettor_fl( amnt_deposit );
+
+    clear_disp();
 
     // update cash reserve.
     clir.top().dcrs_cash_reserve(amnt_deposit);
 
     // Print receipt later. Gotcha.
     // Print receipt later. Gotcha.
-    print_receipt(clir.top(),1,amnt_deposit);
+    print_receipt(clir.top(),1,amnt_deposit, transferee);
 
     // Overwrite file with new Data.
     over_ridefile( clir );
 
 }
 
-
+// function ovewrites data to file for a specific Client account
 void over_ridefile( std::stack <Client> & clie ) {
 
     // instantiate fstream class
@@ -207,6 +228,7 @@ void over_ridefile( std::stack <Client> & clie ) {
     }   
 }
 
+// funcction compares if two strings are same based on a standard bank principle.
 bool compr_line(std::string & line_1, std::string & cli_2) {
 
 
