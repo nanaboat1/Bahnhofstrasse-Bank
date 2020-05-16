@@ -35,13 +35,14 @@ void read_file( std::vector <std::string> & usr_details, std::stack <Client> & u
 
 /////////////////////
 
-// Case: Removes unneccessary data. 
+// Case: Removes un-alphanumeric characters 
+// from string . 
 // 
 void cv_str( std::string & str_float ) {
 
   std::string str = "";
 
-  
+  // Checks for unnessary characters using ASCII values.
   for ( int i =0; i < str_float.length(); i++ ) {
 
     if( static_cast<int>(str_float[i]) >= 32 && static_cast<int>(str_float[i]) <= 126 ) {
@@ -278,6 +279,9 @@ void login_bank( ) {
     // Performs Transactions on User.
 
     // Use a loop for mother function.
+
+    // CASE : Mother function is from Transaction.h
+    // it handles major transactions in the bank.
     mother_func( user); 
 
   return;
