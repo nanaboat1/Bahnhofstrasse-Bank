@@ -32,7 +32,7 @@ void cash_withraw( std::stack <Client> & clier  );
 void cash_deposit( std::stack <Client> & clir );
 void cash_transfer( std::stack <Client> & clr  );
 void over_ridefile( std::stack <Client> & clie );
-
+bool compr_line(std::string & line_1, std::string & cli_2);
 ////
 
 // Mother func for performing transactions.
@@ -52,12 +52,9 @@ void mother_func( std::stack <Client> & clien ) {
         case 1 : 
             cash_withraw( clien );
         break;
-
         case 2 :
             cash_deposit( clien );
         break;
-
-
         case 3 :
             cash_transfer( clien );
         break;
@@ -67,7 +64,7 @@ void mother_func( std::stack <Client> & clien ) {
     return;
 }
 
-
+// Performs Cash withdraw processes.
 void cash_withraw( std::stack <Client> & clier  ) {
 
     // Call the cash withdraw display function.
@@ -77,23 +74,19 @@ void cash_withraw( std::stack <Client> & clier  ) {
 
     float amnt_withdraw = 0.0;
 
-    // get's current reserve
-    float cur_cash_rsrv = clier.top().get_cash_resrv();
-
     // Takes in user input.
     input_gettor_fl( amnt_withdraw );
 
-    // deducut amnt withdrawn from bank.
-    cur_cash_rsrv -= amnt_withdraw;
-
     // update cash reserve.
-    clier.top().update_cash_reserve(cur_cash_rsrv);
+    clier.top().dcrs_cash_reserve(amnt_withdraw);
 
     // Print receipt later. Gotcha.
     print_receipt(clier.top(),0, amnt_withdraw );
 
+    over_ridefile( clier );
 }
 
+// Performs Cash deposit processes.
 void cash_deposit( std::stack <Client> & clir ) { 
 
     // Cash Deposit Display
@@ -102,30 +95,26 @@ void cash_deposit( std::stack <Client> & clir ) {
 
     clear_disp();
 
-
-
     float amnt_deposit = 0.0;
-
-    // get's current reserve
-    float cur_cash_rsrv = clir.top().get_cash_resrv();
 
     // Takes in user input.
     input_gettor_fl( amnt_deposit );
 
     // credit amnt into from bank.
-    cur_cash_rsrv = clir.top() + amnt_deposit  ;
-
+   
     // update cash reserve.
-    clir.top().update_cash_reserve(cur_cash_rsrv);
+    clir.top().incrs_cash_reserve(amnt_deposit);
 
     // Print receipt later. Gotcha.
     // Print receipt later. Gotcha.
     print_receipt(clir.top(),2,amnt_deposit);
 
+    over_ridefile( clir );
+
 }
 
+// Performs cash transfer proesses.
 void cash_transfer( std::stack <Client> & clir) {
-
 
     // Cash Deposit Display
     // Call the cash withdraw display function.
@@ -135,21 +124,18 @@ void cash_transfer( std::stack <Client> & clir) {
 
     float amnt_deposit = 0.0;
 
-    // get's current reserve
-    float cur_cash_rsrv = clir.top().get_cash_resrv();
-
     // Takes in user input.
     input_gettor_fl( amnt_deposit );
 
-    // trnsfr amount from bank.
-    cur_cash_rsrv = clir.top() - amnt_deposit;
-
     // update cash reserve.
-    clir.top().update_cash_reserve(cur_cash_rsrv);
+    clir.top().dcrs_cash_reserve(amnt_deposit);
 
     // Print receipt later. Gotcha.
     // Print receipt later. Gotcha.
     print_receipt(clir.top(),1,amnt_deposit);
+
+    // Overwrite file with new Data.
+    over_ridefile( clir );
 
 }
 
@@ -158,9 +144,7 @@ void over_ridefile( std::stack <Client> & clie ) {
 
     // instantiate fstream class
     std::fstream file_1;
-    std::fstream file_2;
-
-
+    
     file_1.open("Vault.dat", std::ios::in | std::ios::out);
 
     // Check if file is opened
@@ -169,45 +153,64 @@ void over_ridefile( std::stack <Client> & clie ) {
         return;
     }
 
-    std::string line_vault;
+    std::string line_vault; // get's line content of file.
     std::string line_tempvault;
     std::vector <std::string> file_content;
 
     // keeps track if there's still content in file.
-    bool file_content = true
+    bool _content_done = true;
 
     // Push All contents of Vault to vector
-
-    while ( file_content ) {
-
-    }
+    // clie.top().incrs_cash_reserve(5.00); // for testing.
 
     // Case :: compare string lines.
-    while ( file_1 >> line_vault ) {
+    while ( !file_1.eof() ) {
 
+        // Get's line from data.
+        getline(file_1, line_vault);
 
-        std::string line_file = clie.top().to_file();
+        // Case : get_file content's of Client 
+        std::string client_data = clie.top().to_file();
 
-        bool equal = compr_line( line_vault, line_file);
+        // Case : Compare client_data of type string with line_vault.
+        // Compares some lines of two strings to see if they are equal.
+        bool equal = compr_line( line_vault, client_data );
 
+        // When the two string lines  are similar
         if ( equal ) {
+            // Push overidden content  to file vector.
+            file_content.push_back(client_data);
+
+        } else { // if not
 
 
-
+            // Push existing file content to file vector.
+            file_content.push_back(line_vault);
         }
-
-
-
-
     }
 
-    
+    // release file to os.
+    file_1.close(); 
+
+    // Write Content to File again, including the updated line.
+    file_1.open("Vault.dat", std::ios::out | std::ios::trunc);
+
+
+    int file_vec_size = file_content.size();
+
+    int i=0;
+
+    // Case : write updated content to file.
+    while ( i < file_content.size() ) {
+        file_1 << file_content[i] << std::endl;;
+        i++;
+    }   
 }
 
 bool compr_line(std::string & line_1, std::string & cli_2) {
 
 
-    for ( int i=0; i < 15; i++ ) {
+    for ( int i=0; i < 25; i++ ) {
 
         if ( !(line_1[i] == cli_2[i]) ) {
             return false;

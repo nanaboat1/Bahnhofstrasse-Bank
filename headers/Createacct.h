@@ -50,7 +50,7 @@ void input_gettor( Type & a ) {
     bool rentering = false; // tracks user's input
 
     // Case: inform the user of what's going on.
-    std::cout << std::endl;
+    std::cout << std::endl  << std::endl;
     std::cout << " NOTE: Program will prompt you until both input's are correct." << std::endl;
     std::cout << std::endl;
     do{ 
@@ -62,6 +62,7 @@ void input_gettor( Type & a ) {
         std::cout << std::endl;
         std::cout << " Enter Your input again --> ";
         getline(std::cin, input_b_ptr);
+        std::cout << std::endl;
 
     }while( input_a_ptr != input_b_ptr );
 
@@ -135,11 +136,9 @@ void accnt_to_file( Client & customer ) {
 }
 
 
-
 void create_account( ) {
 
     
-
     // Case: Display The Welcome Screen for Creating an Account. 
     int type_of_account = std::stoi(welcome_display()); // get's user's choice on type of account to create.
     ////////
@@ -209,13 +208,16 @@ void create_account( ) {
     account_created = nullptr;
     user_info.empty(); // empty vector
 
-    char delay ; // delays the program
-    std::cout << " ACCOUNT SUCCESSFULLY CREATED " << std::endl;
-    std::cout << " MOVE ON TO LOG IN " << std::endl;
+    char delay[50] ; // delays the program
 
+    std::cout << "-------------------------------" << std::endl;
+    std::cout <<"| ACCOUNT SUCCESSFULLY CREATED |" << std::endl;
+    std::cout <<"|                              |" << std::endl;
+    std::cout <<"| MOVE ON TO LOG IN            |" << std::endl;
+    std::cout <<"--------------------------------" << std::endl;
 
     std::cout << "Enter any key to exit Create Account " << std::endl;
-    std::cin >> delay;
+    std::cin >> delay[0];
 
 
     return;

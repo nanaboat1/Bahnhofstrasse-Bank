@@ -13,49 +13,45 @@
 
 void tester( ) {
 
-   // std::vector <std::string> vec;
+    std::vector <std::string> vec;
 
-   // std::string test = "Nana Boateng Amoah,wer34,Cu09309,4704,0.0000";
+    std::string test = "Nana Boateng Amoah,wer34,Cu09309,4704,0.0000";
 
-    // line_to_seprt( test, vec );
+    line_to_seprt( test, vec );
 
 
    // std::cout << vec[4] << std::endl;
     
-
    // if ( vec[2] == "Cu09309") {
        //std::cout << "Good to go" << std::endl;
    //}
 
     // login_bank();
 
-   // std::stack <Client> cli;
+    // Client clo;
 
-   // Client clo;
+    // std::stack <Client> cli;
+    //cli.push(clo);
 
-   // cli.push(clo);
+    // over_ridefile( cli );
+
     // cash_withraw( cli );
 
     // print_receipt( clo , 1, 0.0);
 
-
    // mother_func( cli );
-    
+   
 }
 
 void main_test() {
-
-    Home();
-
-
+   Home();
 }
 
 
 int main() {
 
-    // tester();
-
+   // tester();
     main_test();
 
-    return 0;
+   return 0;
 }

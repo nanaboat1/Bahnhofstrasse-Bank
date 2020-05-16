@@ -69,6 +69,7 @@ void login_form( std::vector <std::string> & usr_details ) {
                 info_welcome +=  "|     <2>  PIN  .                                  |" + std::string("\n");
     // 
 
+    // Case: General Display for Class.
     std::cout << horizontal_line << std::endl; 
     for( int i=0; i <5; i++ ) {
         std::cout << line_of_pixels << std::endl;
@@ -80,13 +81,13 @@ void login_form( std::vector <std::string> & usr_details ) {
 
     std::string take_input;
     std::cout << "--------------------------" << std::endl;
-    std::cout << "Enter your Account number |\n" << std::endl;
+    std::cout << "Enter your Account number |\n";
     std::cout << "--------------------------" << std::endl;
     input_gettor( take_input);
     usr_details.push_back( take_input); // usr_details[0] == Account number
 
     std::cout << "--------------------------" << std::endl;
-    std::cout << "Enter your PIN number     |\n" << std::endl;
+    std::cout << "Enter your PIN number     |\n";
     std::cout << "--------------------------" << std::endl;
     input_gettor( take_input );
     usr_details.push_back( take_input ); // usr_details[1] == login PIN

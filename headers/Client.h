@@ -45,7 +45,7 @@ class Client {
         std::string get_pin( );
 
         // set's the access to true ,after data is evaluated.
-        bool set_access( int arb_pin );
+        void set_access( std::string arb_pin );
 
         // get's cash reserve 
         float get_cash_resrv( );
@@ -79,7 +79,10 @@ class Client {
     public :
 
         // updates's cash reserve()
-        void update_cash_reserve( float update_cash );
+        void incrs_cash_reserve( float update_cash );
+
+        // decrease cash reserve
+        void dcrs_cash_reserve( float update_cash );
 
         // Constructors for the Class
 

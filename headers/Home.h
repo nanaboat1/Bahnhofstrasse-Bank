@@ -57,57 +57,57 @@ void Home(  )  {
 
     // declaring variables
     int choice;
-    int choi;
+    bool leave_input = false;
     
-
-    bool exit = false;
-
+    bool exit = false; 
     // Welcome information
     std::cout << " WELCOME TO BRN BANK " << std::endl << std::endl; 
 
     while ( !exit ) {
 
-        std::cout << " WELCOME TO BRN BANK AGAIN" << std::endl << std::endl;
 
-        std::cout << " SELECT <1> TO CREATE A NEW ACCOUNT. YOU get 700 for creating one. " << std::endl << std::endl;
+        do{
+            std::cout << "------------------------------------------------------------------------ " << std::endl;
 
-        std::cout << " SELECT <2> TO LOGIN INTO AN EXISTING ACCOUNT " << std::endl;
+            std::cout << " WELCOME TO BRN BANK AGAIN" << std::endl << std::endl;
 
+            std::cout << " SELECT <1> TO CREATE A NEW ACCOUNT. YOU get $ 700.00 for creating one. " << std::endl << std::endl;
 
-        std::cout << " NOTE , ONLY NUMBERS ARE ACCEPTED:: OR PROGRAM WILL CRASH" << std::endl;
-        std::cout << " Enter your choice ==> ";
-        std::cin >> choice;
+            std::cout << " SELECT <2> TO LOGIN INTO AN EXISTING ACCOUNT " << std::endl;
 
-        // clears screen.
-        #ifdef _WIN32
-            system("cls");
-        #else 
-            system("clear");
-        #endif
+            std::cout << "------------------------------------------------------------------------ " << std::endl;
 
+            std::cout << " NOTE , ONLY NUMBERS ARE ACCEPTED:: OR PROGRAM WILL CRASH " << std::endl;
+            std::cout << " Enter your choice ==> ";
+            std::cin >> choice;
 
+            if ( choice == 1 || choice == 2 ) {
+                leave_input = true;
+            }
 
-        
+        }while( !leave_input);
+
+   
+        // clears display
+        clear_disp();
+
 
         // Using Statements to go to the specified sub-program
-        switch( choice ) {
+        switch(choice) {
 
             // Call create account
             case 1 : create_account();
-                system("clear");
-
+                // clears display
+                clear_disp();
             break;
-
             // Log's in and Perform Transaction.
             case 2 : login_bank(); 
-                system("clear");
-                
+                // clears display
+                clear_disp();
             break;
-
             default :
-                create_account();
-                system("clear");
-
+                // clears display
+                clear_disp();
             break;
 
         }
